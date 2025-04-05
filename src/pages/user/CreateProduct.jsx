@@ -220,7 +220,7 @@ const CreateProduct = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Height
+                  Height (cm)
                 </label>
                 <input
                   type="number"
@@ -234,7 +234,7 @@ const CreateProduct = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Length
+                  Length (cm)
                 </label>
                 <input
                   type="number"
@@ -248,7 +248,7 @@ const CreateProduct = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Width
+                  Width (cm)
                 </label>
                 <input
                   type="number"
@@ -262,7 +262,7 @@ const CreateProduct = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Weight
+                  Weight (kg)
                 </label>
                 <input
                   type="number"

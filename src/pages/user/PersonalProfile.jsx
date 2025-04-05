@@ -138,8 +138,8 @@ function PersonalProfile() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-              <div className="flex items-center gap-3 p-4 bg-emerald-50 rounded">
+            <div className={user.role === "admin" ? "grid grid-cols-1 md:grid-cols-2 gap-4 mt-6" : ""}>
+              <div className="flex items-center gap-3 p-3 bg-emerald-50 rounded">
                 <FiDollarSign className="text-emerald-700" />
                 <div>
                   <p className="text-sm text-gray-500">Balance</p>
@@ -148,22 +148,17 @@ function PersonalProfile() {
                   </p>
                 </div>
               </div>
-
-              <div
-                className={`${
-                  user.role === "admin"
-                    ? "flex items-center gap-3 p-4 bg-emerald-50 rounded"
-                    : "hidden"
-                }`}
-              >
+              {user.role === "admin" && (
+                <div className="flex items-center gap-3 p-4 bg-emerald-50 rounded">
                 <FiDollarSign className="text-emerald-700" />
-                <div>
-                  <p className="text-sm text-gray-500">Commission Balance</p>
-                  <p className="font-bold text-lg">
-                    ${user?.commissionBalance?.toFixed(2) || "0.00"}
-                  </p>
+                  <div>
+                    <p className="text-sm text-gray-500">Commission Balance</p>
+                    <p className="font-bold text-lg">
+                      ${user?.commissionBalance?.toFixed(2) || "0.00"}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
