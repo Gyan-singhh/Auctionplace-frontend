@@ -2,6 +2,15 @@
 
 @plugin "tailwindcss-animate";
 
+
+input:-webkit-autofill {
+  background-color: transparent !important;
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: white !important; /* optional for white text */
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);

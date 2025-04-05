@@ -100,7 +100,6 @@ function Login() {
         </div>
 
         <div className="w-full md:w-1/2 bg-gradient-to-br from-[#236f44] to-[#1a4b2c] p-12 text-white">
-          {error && <p className="text-red-500 mb-4">{error}</p>}
           <form onSubmit={handleSubmit(login)}>
             <div className="mb-4">
               <label className="block text-gray-300">Email</label>

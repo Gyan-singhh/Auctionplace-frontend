@@ -15,14 +15,14 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Logo and Social */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 flex flex-col items-center lg:items-start text-center lg:text-left">
             <div className="flex items-center space-x-2 mb-4">
               <img src={"/logo.png"} alt="TheAuctionApp Logo" className="h-8" />
               <span className="text-xl font-bold text-white">
                 TheAuctionPlace
               </span>
             </div>
-            <p className="text-green-100 mb-6">Bid. Win. Enjoy.</p>
+            <p className="text-green-100 mb-6 hidden md:block">Bid. Win. Enjoy.</p>
             <div className="flex space-x-4">
               <Link
                 href="/"
@@ -52,7 +52,7 @@ const Footer = () => {
           </div>
 
           {/* Marketplace Links */}
-          <div>
+          <div className="hidden md:block">
             <h4 className="text-white font-semibold mb-4 text-lg">
               Marketplace
             </h4>
@@ -76,7 +76,7 @@ const Footer = () => {
           </div>
 
           {/* Company Links */}
-          <div>
+          <div className="hidden md:block">
             <h4 className="text-white font-semibold mb-4 text-lg">Company</h4>
             <ul className="space-y-2">
               {["About Us", "Blog", "Careers", "Press"].map((item) => (
@@ -93,7 +93,7 @@ const Footer = () => {
           </div>
 
           {/* Support Links */}
-          <div>
+          <div className="hidden md:block">
             <h4 className="text-white font-semibold mb-4 text-lg">Support</h4>
             <ul className="space-y-2">
               {["Help Center", "Contact Us", "FAQs", "Safety Tips"].map(

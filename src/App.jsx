@@ -15,30 +15,29 @@ function App() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        await axios
-          .get(`${API_URL}/api/v1/users/me`, {
-            withCredentials: true,
-            headers: { "Content-Type": "application/json" },
-          })
-          .then((res) => {
-            if (res) {
-              dispatch(login({ userData: res.data.data }));
-            } else {
-              dispatch(logout());
-            }
-          })
-          .finally(() => setLoading(false));
+        setLoading(true);
+        const response = await axios.get(`${API_URL}/api/v1/users/me`, {
+          withCredentials: true,
+          headers: { "Content-Type": "application/json" },
+        });
+        if (response.data?.data) {
+          dispatch(login({ userData: response.data.data }));
+        } else {
+          dispatch(logout());
+        }
       } catch (error) {
-        console.log("User not fetching failed", error);
+        console.log(error);
+        dispatch(logout());
+      } finally {
+        setLoading(false);
       }
     };
     fetchUser();
-    setLoading(false);
-  }, []);
+  }, [dispatch]);
 
   return !loading ? (
     <>
-      <ToastContainer position="top-center" autoClose={3000} />
+      <ToastContainer position="top-center" autoClose={2000} />
       <Outlet />
     </>
   ) : (

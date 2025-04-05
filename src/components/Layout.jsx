@@ -5,13 +5,13 @@ import ScrollToTop from "./ScrollToTop.jsx";
 
 export const Layout = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <>
       <ScrollToTop />
       <Navbar />
-      <main className="flex-1">
+      <main className="min-h-[80vh]">
         <Outlet />
       </main>
       <Footer />
-    </div>
+    </>
   );
 };

@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FiCheck, FiX, FiEdit2, FiTrash2, FiLoader } from "react-icons/fi";
+import {
+  FiCheck,
+  FiX,
+  FiEdit2,
+  FiTrash2,
+  FiLoader,
+  FiPackage,
+  FiPlus,
+} from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 const API_URL = import.meta.env.VITE_API_URL;
@@ -13,12 +21,9 @@ function MyProducts() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(
-          `${API_URL}/api/v1/products/user`,
-          {
-            withCredentials: true,
-          }
-        );
+        const response = await axios.get(`${API_URL}/api/v1/products/user`, {
+          withCredentials: true,
+        });
         if (response.data.statusCode) {
           setProducts(response.data.data);
         }
@@ -91,138 +96,163 @@ function MyProducts() {
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <div className="p-4 border-b border-gray-200 flex justify-between items-center">
           <h2 className="text-xl font-semibold text-gray-800">Product Lists</h2>
-          <Link
-            to={"/user/create-product"}
-            className="px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition"
-          >
-            Create Product
-          </Link>
+          {products.length > 0 && (
+            <Link
+              to={"/user/create-product"}
+              className="px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition"
+            >
+              Create Product
+            </Link>
+          )}
         </div>
-
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  S.A.
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Title
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Commission
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Price
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Bid Amount (US$)
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Verify
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Sell
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {products.map((product, index) => (
-                <tr key={product._id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {index + 1}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0 h-10 w-10">
-                        <img
-                          className="h-10 w-10 rounded-full object-cover"
-                          src={
-                            product.image?.url ||
-                            "https://via.placeholder.com/150"
-                          }
-                          alt={product.image?.alt || product.title}
-                        />
-                      </div>
-                      <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900 truncate max-w-xs">
-                          {product.title}
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          {product.category}
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {product.commission}%
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    ${product.price.toLocaleString()}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    ${product.biddingPrice.toLocaleString()}
-                  </td>
-
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <div className="flex items-center gap-2">
-                      {product.isVerify ? (
-                        <>
-                          <FiCheck className="text-green-500" />
-                          <span>Yes</span>
-                        </>
-                      ) : (
-                        <>
-                          <FiX className="text-red-500" />
-                          <span>No</span>
-                        </>
-                      )}
-                    </div>
-                  </td>
-
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <button
-                      onClick={() => handleSell(product._id)}
-                      className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                        product.isSoldOut
-                          ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                          : "bg-emerald-100 text-emerald-800 hover:bg-emerald-200 hover:text-emerald-900"
-                      }`}
-                      disabled={product.isSoldOut}
-                      title={
-                        product.isSoldOut ? "Already sold" : "Sell this product"
-                      }
-                    >
-                      {product.isSoldOut ? "Sold" : "Sell"}
-                    </button>
-                  </td>
-
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <div className="flex space-x-2">
-                      <Link
-                        to={`/user/edit-product/${product._id}`}
-                        className="text-emerald-600 hover:text-emerald-900"
-                        title="Edit"
-                      >
-                        <FiEdit2 />
-                      </Link>
-                      <button
-                        className="text-red-600 hover:text-red-900"
-                        title="Delete"
-                        onClick={() => handleDelete(product._id)}
-                      >
-                        <FiTrash2 />
-                      </button>
-                    </div>
-                  </td>
+        {products.length > 0 ? (
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    S.A.
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Title
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Commission
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Price
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Bid Amount (US$)
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Verify
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Sell
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Actions
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {products.map((product, index) => (
+                  <tr key={product._id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {index + 1}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <div className="flex-shrink-0 h-10 w-10">
+                          <img
+                            className="h-10 w-10 rounded-full object-cover"
+                            src={
+                              product.image?.url ||
+                              "https://via.placeholder.com/150"
+                            }
+                            alt={product.image?.alt || product.title}
+                          />
+                        </div>
+                        <div className="ml-4">
+                          <div className="text-sm font-medium text-gray-900 truncate max-w-xs">
+                            {product.title}
+                          </div>
+                          <div className="text-sm text-gray-500">
+                            {product.category}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {product.commission}%
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      ${product.price.toLocaleString()}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      ${product.biddingPrice.toLocaleString()}
+                    </td>
+
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <div className="flex items-center gap-2">
+                        {product.isVerify ? (
+                          <>
+                            <FiCheck className="text-green-500" />
+                            <span>Yes</span>
+                          </>
+                        ) : (
+                          <>
+                            <FiX className="text-red-500" />
+                            <span>No</span>
+                          </>
+                        )}
+                      </div>
+                    </td>
+
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <button
+                        onClick={() => handleSell(product._id)}
+                        className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                          product.isSoldOut
+                            ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                            : "bg-emerald-100 text-emerald-800 hover:bg-emerald-200 hover:text-emerald-900"
+                        }`}
+                        disabled={product.isSoldOut}
+                        title={
+                          product.isSoldOut
+                            ? "Already sold"
+                            : "Sell this product"
+                        }
+                      >
+                        {product.isSoldOut ? "Sold" : "Sell"}
+                      </button>
+                    </td>
+
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <div className="flex space-x-2">
+                        <Link
+                          to={`/user/edit-product/${product._id}`}
+                          className="text-emerald-600 hover:text-emerald-900"
+                          title="Edit"
+                        >
+                          <FiEdit2 />
+                        </Link>
+                        <button
+                          className="text-red-600 hover:text-red-900"
+                          title="Delete"
+                          onClick={() => handleDelete(product._id)}
+                        >
+                          <FiTrash2 />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <FiPackage className="mx-auto h-12 w-12 text-gray-400" />
+            <h3 className="mt-2 text-sm font-medium text-gray-900">
+              No products
+            </h3>
+            <p className="mt-1 text-sm text-gray-500">
+              Get started by adding a new product.
+            </p>
+            <div className="mt-6">
+              <Link
+                to="/user/add-product"
+                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
+              >
+                <FiPlus className="-ml-1 mr-2 h-5 w-5" />
+                Add Product
+              </Link>
+            </div>
+          </div>
+        )}
+
         <div className="bg-gray-50 px-6 py-3 flex items-center justify-between border-t border-gray-200">
           <div className="flex-1 flex justify-between sm:hidden">
             <button className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
