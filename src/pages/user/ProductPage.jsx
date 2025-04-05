@@ -16,6 +16,7 @@ function ProductPage() {
 
   const handleBidSubmit = async () => {
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.post(
         `${API_URL}/api/v1/biddings/${id}`,
         {
@@ -24,7 +25,10 @@ function ProductPage() {
         },
         {
           withCredentials: true,
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
         }
       );
       toast.success("Bid placed successfully!");

@@ -41,10 +41,15 @@ function EditProduct() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
+        const token = localStorage.getItem("token");
         const response = await axios.get(
           `${API_URL}/api/v1/products/${id}`,
           {
             withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`,
+            },
           }
         );
 
@@ -90,6 +95,8 @@ function EditProduct() {
     setLoading(true);
 
     try {
+      const token = localStorage.getItem("token");
+      
       const formData = new FormData();
       formData.append("title", product.title);
       formData.append("description", product.description);
@@ -107,6 +114,7 @@ function EditProduct() {
           withCredentials: true,
           headers: {
             "Content-Type": "multipart/form-data",
+            "Authorization": `Bearer ${token}`,
           },
         }
       );

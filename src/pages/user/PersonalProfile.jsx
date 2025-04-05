@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { FiUser, FiMail, FiDollarSign, FiGrid, FiEdit, FiLoader } from "react-icons/fi";
+import {
+  FiUser,
+  FiMail,
+  FiDollarSign,
+  FiGrid,
+  FiEdit,
+  FiLoader,
+} from "react-icons/fi";
 import axios from "axios";
 import { toast } from "react-toastify";
 const API_URL = import.meta.env.VITE_API_URL;
@@ -13,7 +20,10 @@ function PersonalProfile() {
 
   useEffect(() => {
     if (user) {
-      setAvatar(user.avatar.secureUrl || "https://cdn-icons-png.flaticon.com/512/2202/2202112.png");
+      setAvatar(
+        user.avatar.secureUrl ||
+          "https://cdn-icons-png.flaticon.com/512/2202/2202112.png"
+      );
       setLoading(false);
     }
   }, [user]);
@@ -28,10 +38,11 @@ function PersonalProfile() {
     }
 
     setIsUploading(true);
-    
+
     try {
+      const token = localStorage.getItem("token");
       const formData = new FormData();
-      formData.append('avatar', file);
+      formData.append("avatar", file);
 
       const response = await axios.put(
         `${API_URL}/api/v1/users/update-image`,
@@ -40,15 +51,18 @@ function PersonalProfile() {
           withCredentials: true,
           headers: {
             "Content-Type": "multipart/form-data",
+            "Authorization": `Bearer ${token}`,
           },
         }
       );
 
-      setAvatar(response?.data?.data?.avatar?.secureUrl); 
-      toast.success("Profile image updated successfully");      
+      setAvatar(response?.data?.data?.avatar?.secureUrl);
+      toast.success("Profile image updated successfully");
     } catch (error) {
       console.error("Error uploading avatar:", error);
-      toast.error(error.response?.data?.message || "Failed to update profile image");
+      toast.error(
+        error.response?.data?.message || "Failed to update profile image"
+      );
     } finally {
       setIsUploading(false);
     }
@@ -74,7 +88,7 @@ function PersonalProfile() {
                 alt="Profile"
                 className="w-40 h-40 rounded-full object-cover border-4 border-emerald-100 mb-4"
               />
-              <label 
+              <label
                 htmlFor="avatar-upload"
                 className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
               >
@@ -85,7 +99,7 @@ function PersonalProfile() {
                 )}
                 <input
                   id="avatar-upload"
-                  type="file"                 
+                  type="file"
                   onChange={handleAvatarChange}
                   className="hidden"
                   disabled={isUploading}
@@ -135,7 +149,13 @@ function PersonalProfile() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 p-4 bg-emerald-50 rounded">
+              <div
+                className={`${
+                  user.role === "admin"
+                    ? "flex items-center gap-3 p-4 bg-emerald-50 rounded"
+                    : "hidden"
+                }`}
+              >
                 <FiDollarSign className="text-emerald-700" />
                 <div>
                   <p className="text-sm text-gray-500">Commission Balance</p>

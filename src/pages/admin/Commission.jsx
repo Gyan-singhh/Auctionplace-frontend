@@ -45,11 +45,16 @@ const Commission = () => {
     setSuccess(false);
 
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.patch(
         `${API_URL}/api/v1/products/commission/${id}`,
         { commission: parseFloat(commission) },
         {
           withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
         }
       );
       setSuccess(true);

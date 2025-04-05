@@ -25,11 +25,16 @@ const WinningBids = () => {
   useEffect(() => {
     const fetchWonProducts = async () => {
       try {
+        const token = localStorage.getItem("token");
         setLoading(true);
         const { data } = await axios.get(
           `${API_URL}/api/v1/products/won`,
           {
             withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`,
+            },
           }
         );
         setWonProducts(data.data);

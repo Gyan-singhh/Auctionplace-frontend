@@ -17,12 +17,17 @@ function MyProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(`${API_URL}/api/v1/products/user`, {
           withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
         });
         if (response.data.statusCode) {
           setProducts(response.data.data);
@@ -47,6 +52,10 @@ function MyProducts() {
         `${API_URL}/api/v1/products/${productId}`,
         {
           withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
         }
       );
 
@@ -69,7 +78,13 @@ function MyProducts() {
       const response = await axios.patch(
         `${API_URL}/api/v1/biddings/${productId}/sell`,
         {},
-        { withCredentials: true }
+        { 
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+         }
       );
 
       toast.success(response.data?.message || "Product sold successfully!");

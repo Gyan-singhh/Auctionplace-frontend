@@ -75,6 +75,8 @@ const CreateProduct = () => {
     setError(null);
 
     try {
+      const token = localStorage.getItem("token");
+      
       const formData = new FormData();
       formData.append("title", product.title);
       formData.append("description", product.description);
@@ -94,10 +96,11 @@ const CreateProduct = () => {
         `${API_URL}/api/v1/products`,
         formData,
         {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
           withCredentials: true,
+          headers: {           
+            "Content-Type": "multipart/form-data",
+            "Authorization": `Bearer ${token}`,
+          },
         }
       );
 

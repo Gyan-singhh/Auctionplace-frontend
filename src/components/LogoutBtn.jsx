@@ -13,13 +13,14 @@ function LogoutBtn({ sidebarOpen }) {
 
   const logoutHandler = async () => {
     try {
-      const response = await axios.get(
-        `${API_URL}/api/v1/users/logout`,
-        {
-          withCredentials: true,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      const token = localStorage.getItem("token");
+      const response = await axios.get(`${API_URL}/api/v1/users/logout`, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      });
 
       if (response && response.data) {
         toast.success("Logout successful! See you next time!");

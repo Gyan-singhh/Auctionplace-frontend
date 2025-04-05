@@ -14,8 +14,13 @@ const Analytics = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
+        const token = localStorage.getItem("token");
         const response = await axios.get(`${API_URL}/api/v1/users/stats`, {
           withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
         });
         setStats({
           balance: response.data.data.balance,

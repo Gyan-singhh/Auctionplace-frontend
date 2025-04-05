@@ -26,9 +26,7 @@ const AllProductList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(
-          `${API_URL}/api/v1/products`
-        );
+        const response = await axios.get(`${API_URL}/api/v1/products`);
         if (response.data.statusCode) {
           setProducts(response.data.data);
         }
@@ -48,8 +46,13 @@ const AllProductList = () => {
     }
 
     try {
+      const token = localStorage.getItem("token");
       await axios.delete(`${API_URL}/api/v1/products/${productId}`, {
         withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
       });
 
       setProducts((prevProducts) =>

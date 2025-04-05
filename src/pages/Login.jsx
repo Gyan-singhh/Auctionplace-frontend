@@ -39,6 +39,7 @@ function Login() {
 
       if (response) {
         toast.success("Login successful!");
+        localStorage.setItem("token", response.data.token);
         dispatch(authLogin({ userData: response.data.user }));
         navigate("/");
       }

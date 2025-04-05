@@ -16,9 +16,14 @@ function App() {
     const fetchUser = async () => {
       try {
         setLoading(true);
+        const token = localStorage.getItem("token");
+
         const response = await axios.get(`${API_URL}/api/v1/users/me`, {
           withCredentials: true,
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
         });
         if (response.data?.data) {
           dispatch(login({ userData: response.data.data }));
@@ -26,7 +31,8 @@ function App() {
           dispatch(logout());
         }
       } catch (error) {
-        console.log(error);
+        console.error("User fetch failed:", error);
+        localStorage.removeItem('token');
         dispatch(logout());
       } finally {
         setLoading(false);

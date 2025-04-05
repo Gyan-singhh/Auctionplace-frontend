@@ -21,10 +21,15 @@ const AllUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        const token = localStorage.getItem("token");
         const response = await axios.get(
           `${API_URL}/api/v1/users/users`,
           {
             withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`,
+            },
           }
         );
         if (response.data && response.data.data) {
