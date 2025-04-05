@@ -10,11 +10,12 @@ function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
+      setIsLoading(true)
       try {
         const response = await axios.get(
           `${API_URL}/api/v1/products`
