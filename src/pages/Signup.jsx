@@ -97,7 +97,7 @@ function Signup() {
               <input
                 type="text"
                 {...register("username", { required: "Username is required" })}
-                className="w-full bg-transparent border-b border-gray-300 p-2 focus:outline-none"
+                className="email-input w-full bg-transparent border-b border-gray-300 p-2 focus:outline-none"
               />
               {errors.username && (
                 <p className="text-red-400 text-sm">
@@ -117,7 +117,7 @@ function Signup() {
                     message: "Invalid email address",
                   },
                 })}
-                className="w-full bg-transparent border-b border-gray-300 p-2 focus:outline-none"
+                className="email-input w-full bg-transparent border-b border-gray-300 p-2 focus:outline-none"
               />
               {errors.email && (
                 <p className="text-red-400 text-sm">{errors.email.message}</p>
@@ -135,7 +135,7 @@ function Signup() {
                     message: "Password must be at least 6 characters",
                   },
                 })}
-                className="w-full bg-transparent border-b border-gray-300 p-2 focus:outline-none"
+                className="email-input w-full bg-transparent border-b border-gray-300 p-2 focus:outline-none"
               />
               {errors.password && (
                 <p className="text-red-400 text-sm">
@@ -153,7 +153,7 @@ function Signup() {
                   validate: (value) =>
                     value === password || "Passwords do not match",
                 })}
-                className="w-full bg-transparent border-b border-gray-300 p-2 focus:outline-none"
+                className="email-input w-full bg-transparent border-b border-gray-300 p-2 focus:outline-none"
               />
               {errors.confirmPassword && (
                 <p className="text-red-400 text-sm">

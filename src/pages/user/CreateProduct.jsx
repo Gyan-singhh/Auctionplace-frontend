@@ -234,20 +234,6 @@ const CreateProduct = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Length (cm)
-                </label>
-                <input
-                  type="number"
-                  name="length"
-                  value={product.length}
-                  onChange={handleChange}
-                  min="0"
-                  className="w-full p-2 border border-gray-300 rounded-md"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
                   Width (cm)
                 </label>
                 <input
@@ -262,7 +248,21 @@ const CreateProduct = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Weight (kg)
+                  Length (cm)
+                </label>
+                <input
+                  type="number"
+                  name="length"
+                  value={product.length}
+                  onChange={handleChange}
+                  min="0"
+                  className="w-full p-2 border border-gray-300 rounded-md"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Weight (gm)
                 </label>
                 <input
                   type="number"

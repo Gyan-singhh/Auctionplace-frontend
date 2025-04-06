@@ -113,7 +113,7 @@ function Login() {
                     message: "Email address must be valid",
                   },
                 })}
-                className="w-full bg-transparent border-b-2 border-gray-300 p-2 focus:outline-none"
+                className="email-input w-full bg-transparent border-b-2 border-gray-300 p-2 focus:outline-none"
               />
               {errors.email && (
                 <p className="text-red-500">{errors.email.message}</p>
@@ -127,7 +127,7 @@ function Login() {
                 {...register("password", {
                   required: "Password is required",
                 })}
-                className="w-full bg-transparent border-b-2 border-gray-300 p-2 focus:outline-none"
+                className="email-input w-full bg-transparent border-b-2 border-gray-300 p-2 focus:outline-none"
               />
               {errors.password && (
                 <p className="text-red-500">{errors.password.message}</p>
@@ -143,7 +143,7 @@ function Login() {
                   validate: (value) =>
                     value === password || "Passwords do not match",
                 })}
-                className="w-full bg-transparent border-b-2 border-gray-300 p-2 focus:outline-none"
+                className="email-input w-full bg-transparent border-b-2 border-gray-300 p-2 focus:outline-none"
               />
               {errors.confirmPassword && (
                 <p className="text-red-500">{errors.confirmPassword.message}</p>

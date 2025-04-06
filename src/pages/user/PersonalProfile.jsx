@@ -107,7 +107,7 @@ function PersonalProfile() {
               </label>
             </div>
             <h2 className="text-xl font-semibold mt-2">{user?.name}</h2>
-            <span className="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-sm mt-2">
+            <span className="px-4 py-1 bg-emerald-100 text-emerald-800 rounded-full text-sm font-semibold shadow-sm mt-2">
               {user?.role}
             </span>
           </div>

@@ -117,7 +117,7 @@ function ProductPage() {
               {product.length} cm
             </p>
             <p className="mb-2">
-              <strong>Weight:</strong> {product.weight} kg
+              <strong>Weight:</strong> {product.weight} gm / ~{(product.weight / 1000).toFixed(2)} kg
             </p>
             <p className="mb-2">
               <strong>Commission:</strong> {product.commission}%
