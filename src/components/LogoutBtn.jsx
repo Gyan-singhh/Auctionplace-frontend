@@ -23,6 +23,7 @@ function LogoutBtn({ sidebarOpen }) {
       });
 
       if (response && response.data) {
+        localStorage.removeItem("token");
         toast.success("Logout successful! See you next time!");
         dispatch(logout());
         navigate("/");
