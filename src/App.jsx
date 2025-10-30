@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "./store/auth-slice/index.js";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
@@ -9,21 +9,24 @@ import { FiLoader } from "react-icons/fi";
 const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.auth.isLoading);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        setLoading(true);
         const token = localStorage.getItem("token");
-
+        if (!token) {
+          dispatch(logout());
+          return;
+        }
         const response = await axios.get(`${API_URL}/api/v1/users/me`, {
           withCredentials: true,
           headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`,
           },
+          timeout: 8000,
         });
         if (response.data?.data) {
           dispatch(login({ userData: response.data.data }));
@@ -34,14 +37,12 @@ function App() {
         console.error("User fetch failed:", error);
         localStorage.removeItem('token');
         dispatch(logout());
-      } finally {
-        setLoading(false);
       }
     };
     fetchUser();
   }, [dispatch]);
 
-  return !loading ? (
+  return !isLoading ? (
     <>
       <ToastContainer position="top-center" autoClose={2000} />
       <Outlet />
